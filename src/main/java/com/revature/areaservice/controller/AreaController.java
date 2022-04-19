@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/area")
 public class AreaController {
     
-    private com.revature.areaservice.service.AreaService areaService;
+    private AreaService areaService;
+    private RestTemplate restTemplate;
 
     @Autowired
     public AreaController(AreaService areaService){
