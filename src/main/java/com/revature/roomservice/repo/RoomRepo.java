@@ -22,8 +22,8 @@ public interface RoomRepo extends JpaRepository<Room, Integer>{
 	@Query("FROM Room r where r.doctor = ?1")
 	public List<Room> findByDoctor(User doctor);
 	
-	@Query("FROM Room r where r.nurse = ?1")
-	public List<Room> findByNurse(User nurse);
+//	@Query("FROM Room r where r.nurse = ?1")
+//	public List<Room> findByNurse(User nurse);
 	
 	@Query("FROM Room r where r.patient = ?1")
 	public Room findByPatient(Patient patient);

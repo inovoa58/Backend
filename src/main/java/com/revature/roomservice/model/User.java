@@ -1,11 +1,12 @@
 package com.revature.roomservice.model;
 
-import javax.management.relation.Role;
+//import javax.management.relation.Role;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import com.revature.roomservice.model.Role;
 
 import org.springframework.stereotype.Component;
 

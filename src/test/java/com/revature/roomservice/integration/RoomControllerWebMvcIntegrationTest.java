@@ -27,51 +27,103 @@ import org.springframework.web.context.WebApplicationContext;
 public class RoomControllerWebMvcIntegrationTest {
 	@Autowired
 	private WebApplicationContext context;
-	
+
 	private MockMvc mvc;
-	
+
 	@Before
-	public void setup()
-	{
-		mvc = MockMvcBuilders
-			.webAppContextSetup(context)
-			.apply(springSecurity())
-			.build();
+	public void setup() {
+		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+	}
+
+	@WithMockUser()
+	@Test
+	public void givenAuthGetRooms() throws Exception {
+		ArrayList<Integer> appropriateStatusCodes = new ArrayList<Integer>(Arrays.asList(200, 204));
+		MvcResult result = mvc.perform(get("/room").contentType(MediaType.APPLICATION_JSON)).andReturn();
+		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
+	}
+
+	@Test
+	public void noAuthGetRooms() throws Exception {
+		mvc.perform(get("/room").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isUnauthorized());
+	}
+
+	@WithMockUser()
+	@Test
+	public void givenAuthGetRoomById() throws Exception {
+		ArrayList<Integer> appropriateStatusCodes = new ArrayList<Integer>(Arrays.asList(200, 204));
+		MvcResult result = mvc.perform(get("/room/{id}", 1).contentType(MediaType.APPLICATION_JSON)).andReturn();
+		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
+	}
+
+	@Test
+	public void noAuthGetRoomById() throws Exception {
+		mvc.perform(get("/room/{id}", 1).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isUnauthorized());
+	}
+
+	@WithMockUser()
+	@Test
+	public void givenAuthGetRoomByArea() throws Exception {
+		ArrayList<Integer> appropriateStatusCodes = new ArrayList<Integer>(Arrays.asList(200, 204));
+		MvcResult result = mvc.perform(get("/room/area/{name}", "trauma").contentType(MediaType.APPLICATION_JSON))
+				.andReturn();
+		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
+	}
+
+	@Test
+	public void noAuthGetRoomByArea() throws Exception {
+		mvc.perform(get("/room/area/{name}", "trauma").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isUnauthorized());
 	}
 	
 	@WithMockUser()
 	@Test
-	public void givenAuthGetRooms() throws Exception
-	{
+	public void givenAuthGetRoomByAreaName() throws Exception {
 		ArrayList<Integer> appropriateStatusCodes = new ArrayList<Integer>(Arrays.asList(200, 204));
-		MvcResult result = mvc.perform(get("/room")
-				.contentType(MediaType.APPLICATION_JSON))
+		MvcResult result = mvc.perform(get("/room/roombyarea/{name}", "trauma").contentType(MediaType.APPLICATION_JSON))
 				.andReturn();
 		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
 	}
-	
+
 	@Test
-	public void noAuthGetRooms() throws Exception
-	{
-		mvc.perform(get("/room").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isUnauthorized());
+	public void noAuthGetRoomByAreaName() throws Exception {
+		mvc.perform(get("/room/roombyarea/{name}", "trauma").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isUnauthorized());
 	}
-	
+
 	@WithMockUser()
 	@Test
-	public void givenAuthGetRoomById() throws Exception
-	{
+	public void givenAuthGetByDoctor() throws Exception {
 		ArrayList<Integer> appropriateStatusCodes = new ArrayList<Integer>(Arrays.asList(200, 204));
-		MvcResult result = mvc.perform(get("/room/{id}", 1)
-				.contentType(MediaType.APPLICATION_JSON))
+		MvcResult result = mvc
+				.perform(get("/room/roombydoctor/{doctor}", "Jake").contentType(MediaType.APPLICATION_JSON))
+				.andReturn();
+		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
+
+	}
+
+	@Test
+	public void noAuthGetByDoctor() throws Exception {
+		mvc.perform(get("/room/roombydoctor/{doctor}", "Jake").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isUnauthorized());
+	}
+
+	@WithMockUser()
+	@Test
+	public void givenAuthGetByNurse() throws Exception {
+		ArrayList<Integer> appropriateStatusCodes = new ArrayList<Integer>(Arrays.asList(200, 204));
+		MvcResult result = mvc
+				.perform(get("/room/roombynurse/{nurse}", "Jessica").contentType(MediaType.APPLICATION_JSON))
 				.andReturn();
 		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
 	}
-	
+
 	@Test
-	public void noAuthGetRoomById() throws Exception
-	{
-		mvc.perform(get("/room/{id}", 1).contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isUnauthorized());
+	public void noAuthGetByNurse() throws Exception {
+		mvc.perform(get("/room/roombynurse/{nurse}", "Jessica").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isUnauthorized());
 	}
+	
+	
+	
 }

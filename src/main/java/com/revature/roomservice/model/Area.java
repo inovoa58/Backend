@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class Area {
     private int areaId;
     @Column(unique = true, nullable = false)
     private String name;
+    @OneToOne
     private User doctor;
 
     public Area(int id, String name, User doctor){

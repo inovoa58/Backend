@@ -59,12 +59,12 @@ public class RoomService {
 			return roomRepo.findByArea(area);
 
 		} catch (NoSuchElementException e) {
-			
+
 			e.printStackTrace();
 			return null;
-			
+
 		}
-		
+
 	}
 
 	public List<Room> findByDoctor(User doctor) {
@@ -75,13 +75,13 @@ public class RoomService {
 
 	}
 
-	public List<Room> findByNurse(User nurse) {
-
-		return roomRepo.findByDoctor(nurse);
-
-		// return restTemplate.getForObject("" + doctor, User.class);
-
-	}
+//	public List<Room> findByNurse(User nurse) {
+//
+////		return roomRepo.findByDoctor(nurse);
+//
+//		return restTemplate.getForObject("" + nurse, User.class);
+//
+//	}
 
 	public Room findByPatient(Patient patient) {
 
@@ -89,6 +89,22 @@ public class RoomService {
 
 	}
 
+	public Room updateRoom(int id, Room room) {
+
+		try {
+			Room existing = findById(id);
+
+			existing.equals(room);
+
+			return roomRepo.save(existing);
+
+		} catch (NoSuchElementException e) {
+
+			e.printStackTrace();
+
+			return null;
+		}
+	}
 	// Add notify when transfer
 
 }

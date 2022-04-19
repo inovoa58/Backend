@@ -9,8 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-import org.apache.catalina.User;
+import com.revature.roomservice.model.User;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -25,16 +26,22 @@ public class Room {
 	@JoinColumn(name = "areaId", referencedColumnName = "areaId", nullable = false)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	private Area area;
+	@OneToOne
+	@JoinColumn(name = "userId")
 	private User doctor;
-	private User nurse;
+//	@OneToOne
+//	@JoinColumn(name = "userId")
+//	private User nurse;
+	@OneToOne
+	@JoinColumn(name = "patientId")
 	private Patient patient;
 
-	public Room(int id, int roomNumber, Area area, User doctor, User nurse) {
+	public Room(int id, int roomNumber, Area area, User doctor, Patient patient) {
 		this.roomId = id;
 		this.roomNumber = roomNumber;
 		this.area = area;
 		this.doctor = doctor;
-		this.nurse = nurse;
+		this.patient = patient;
 	}
 
 	public Room() {
@@ -72,13 +79,6 @@ public class Room {
 		this.doctor = doctor;
 	}
 
-	public User getNurse() {
-		return nurse;
-	}
-
-	public void setNurse(User nurse) {
-		this.nurse = nurse;
-	}
 
 	public Patient getPatient() {
 		return patient;
@@ -91,7 +91,7 @@ public class Room {
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", roomNumber=" + roomNumber + ", area=" + area + ", doctor=" + doctor
-				+ ", nurse=" + nurse + ", patient=" + patient + "]";
+				 + ", patient=" + patient + "]";
 	}
 
 }
