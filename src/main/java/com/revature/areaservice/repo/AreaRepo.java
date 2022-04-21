@@ -13,7 +13,5 @@ public interface AreaRepo extends JpaRepository<Area, Integer>{
 
 	@Query("FROM Area a WHERE a.name = ?1")
 	Optional<Area> findByName(String name);
-
-	
 	
 }
