@@ -116,6 +116,7 @@ public class RoomControllerWebMvcIntegrationTest {
 				.perform(get("/room/roombynurse/{nurse}", "Jessica").contentType(MediaType.APPLICATION_JSON))
 				.andReturn();
 		assertTrue(appropriateStatusCodes.contains(result.getResponse().getStatus()));
+		
 	}
 
 	@Test
