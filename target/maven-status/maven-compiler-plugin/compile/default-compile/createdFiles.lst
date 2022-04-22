@@ -1,0 +1,10 @@
+com\revature\areaservice\service\AreaService.class
+com\revature\areaservice\controller\AreaController.class
+com\revature\areaservice\utils\JsonUtils.class
+com\revature\areaservice\model\User.class
+com\revature\areaservice\repo\AreaRepo.class
+com\revature\areaservice\model\Area.class
+com\revature\areaservice\model\Role.class
+com\revature\areaservice\model\Room.class
+com\revature\areaservice\AreaserviceApplication.class
+com\revature\areaservice\config\WebSecurityConfig.class
